@@ -67,22 +67,17 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <strong>Area of expertise:</strong>
-                                    <select class="form-control" name="area_id">
-                                        <option value="">Select Area of expertise</option>
-                                        @foreach ($expertise as $area)
-                                        <option value="{{ $area->id }}"@if(old('area_id',$expert->area_id) ==  $area->id ) selected @endif>{{  $area->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
                             <div class="col-sm-2">
                                 <strong>Years of Experience:</strong>
                                 <div class="input-group-append">
                                     <input type="number" name="years_of_experience" class="form-control" value="{{ $expert->years_of_experience }}">
                                         <span class="input-group-text">Years</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <strong>Contact:</strong>
+                                    <input type="number" name="contact" class="form-control" value="{{ $expert->contact }}">
                                 </div>
                             </div>
 
@@ -92,10 +87,17 @@
                                     <input type="email" name="email" class="form-control" value="{{ $expert->email }}">
                                 </div>
                             </div>
-                            <div class="col-sm-2">
+
+                            <div class="col-sm-6">
                                 <div class="form-group">
-                                    <strong>Contact:</strong>
-                                    <input type="number" name="contact" class="form-control" value="{{ $expert->contact }}">
+                                    <label>Area of expertise (Multiple)</label>
+                                    <div class="select2-blue">
+                                    <select class="select2" multiple="multiple" name="area_id[]" data-placeholder="Select Area (s) of expertise" value="{{ old('area_id[]') }}" data-dropdown-css-class="select2-blue" style="width: 100%;">
+                                        @foreach ($expertise as $area)
+                                        <option value="{{ $area->id }}"@if(old('area_id',$expert->area_id) ==  $area->id )  selected @endif>{{  $area->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    </div>
                                 </div>
                             </div>
 
@@ -105,6 +107,22 @@
                                   <textarea class="form-control" name="profile_message" rows="5">{{ $expert->profile_message }}</textarea>
                                 </div>
                               </div>
+
+
+                            <div class="col-sm-6 mb-3">
+                                <div class="form-group">
+                                    <strong>Current Area(s) of Expertise:</strong>
+                                    <div class="lgs">
+                                       @if(!empty($expert->area))
+                                            @foreach($expert->area  as $expertise)
+                                                <label class="lang">{{ $expertise->name}}</label>
+                                            @endforeach
+                                        @endif
+                                    </div>
+
+                                    {{-- {{ $expert->area->name }} --}}
+                                </div>
+                            </div>
 
                             <div class="col-12 text-center">
                                 <button type="submit" class="btn btn-primary">Submit</button>

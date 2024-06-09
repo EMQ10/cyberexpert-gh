@@ -33,14 +33,13 @@
 
 
                 <!-- left column -->
-                  <!-- jquery validation -->
                   <div class="card">
                     <div class="card-header">
                       <h3 class="card-title" style="font-size:20px;color:#006680; text-transform:uppercase">experts Create</h3>
                     </div>
                     <div class="card-body">
 
-
+                    {{--
                                     @if (count($errors) > 0)
                         <div class="alert alert-danger">
                             <strong>Whoops!</strong> There were some problems with your input.<br><br>
@@ -50,7 +49,7 @@
                                 @endforeach
                             </ul>
                         </div>
-                    @endif
+                    @endif --}}
 
                     <form action="{{ route('experts.store') }}" method="POST" id="quickForm" enctype="multipart/form-data">
                         @csrf
@@ -58,32 +57,18 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <strong>Full Name:</strong>
-                                    <input type="text" name="name" class="form-control" placeholder="Full Name">
+                                    <input type="text" name="name" class="form-control" value="{{ old('name') }}" placeholder="Full Name">
                                     @if ($errors->has('name'))
                                         <span class="text-danger">{{ $errors->first('name') }}</span>
                                     @endif
                                 </div>
                             </div>
 
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <strong>Area of expertise:</strong>
-                                    <select class="form-control" name="area_id">
-                                        <option value="">Select Area of expertise</option>
-                                        @foreach ($areas as $area)
-                                        <option value="{{ $area->id }}">{{ $area->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @if ($errors->has('area'))
-                                        <span class="text-danger">{{ $errors->first('area') }}</span>
-                                    @endif
-                                </div>
-                            </div>
                             <div class="col-sm-2">
                                 <strong>Years of Experience:</strong>
 
                                 <div class="input-group-append">
-                                    <input type="number" name="years_of_experience" class="form-control" placeholder="ie.5">
+                                    <input type="number" name="years_of_experience" class="form-control" value="{{ old('years_of_experience') }}" placeholder="ie.5">
                                         <span class="input-group-text">Years</span>
                                     @if ($errors->has('years_of_experience'))
                                         <span class="text-danger">{{ $errors->first('years_of_experience') }}</span>
@@ -94,7 +79,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <strong>Email:</strong>
-                                    <input type="email" name="email" class="form-control" placeholder="Email">
+                                    <input type="email" name="email" class="form-control" value="{{ old('email') }}" placeholder="Email">
                                     @if ($errors->has('email'))
                                                 <span class="text-danger">{{ $errors->first('email') }}</span>
                                                 @endif
@@ -103,7 +88,7 @@
                             <div class="col-sm-2">
                                 <div class="form-group">
                                     <strong>Contact:</strong>
-                                    <input type="number" name="contact" class="form-control" placeholder="ie.0241234567">
+                                    <input type="number" name="contact" class="form-control" value="{{ old('contact') }}" placeholder="ie.0241234567">
                                     @if ($errors->has('contact'))
                                     <span class="text-danger">{{ $errors->first('contact') }}</span>
                                     @endif
@@ -119,9 +104,24 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                   <label>Profile Message</label>
-                                  <textarea class="form-control" name="profile_message" rows="5" placeholder="Enter ..."></textarea>
+                                  <textarea class="form-control" name="profile_message" rows="5" value="{{ old('profile_message') }}" placeholder="Enter ..."></textarea>
                                 </div>
                               </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Area of expertise (Multiple)</label>
+                                    <div class="select2-blue">
+                                    <select class="select2" multiple="multiple" name="area_id[]" data-placeholder="Select Area (s) of expertise" value="{{ old('area_id[]') }}" data-dropdown-css-class="select2-blue" style="width: 100%;">
+                                        @foreach ($areas as $area)
+                                        <option value="{{ $area->id }}">{{ $area->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    </div>
+                                    @if ($errors->has('area'))
+                                        <span class="text-danger">{{ $errors->first('area') }}</span>
+                                    @endif
+                                </div>
+                            </div>
 
                             <div class="col-12 text-center">
                                 <button type="submit" class="btn btn-primary">Submit</button>

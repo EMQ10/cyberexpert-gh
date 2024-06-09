@@ -18,4 +18,16 @@
 <link rel="stylesheet" href="../../dashboard-page/dist/css/adminlte.css">
 <link rel="stylesheet" href="../../dashboard-page/plugins/daterangepicker/daterangepicker.css">
 <link rel="stylesheet" href="../../dashboard-page/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <!-- Select2 -->
+<link rel="stylesheet" href="../../dashboard-page/plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="../../dashboard-page/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
+<script type="text/javascript">
+    window.setTimeout(function() {
+$(".alert").fadeTo(2000, 0).slideUp(500, function(){
+    $(this).remove();
+});
+}, 3000);
+    </script>
+
 </head>

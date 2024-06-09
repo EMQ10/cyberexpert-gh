@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('contact')->nullable();
             $table->string('profile_message')->nullable();
             $table->foreignId('user_id')->constrained();
-
             $table->timestamps();
         });
     }

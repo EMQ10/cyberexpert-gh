@@ -44,9 +44,9 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto py-0">
                 <a href="https://cyberexpertgh.org/" class="nav-item nav-link">Home</a>
-                <a href="/" class="nav-item nav-link">Experts</a>
                 <a href="https://cyberexpertgh.org/?page_id=561" class="nav-item nav-link">About</a>
                 <a href="https://cyberexpertgh.org/?page_id=908" class="nav-item nav-link">Membership</a>
+                <a href="/" class="nav-item nav-link">Experts</a>
                 <a href="https://cyberexpertgh.org/?page_id=688" class="nav-item nav-link">Resource</a>
                 <a href="https://cyberexpertgh.org/?page_id=890" class="nav-item nav-link">Blog</a>
                 <a href="https://cyberexpertgh.org/?page_id=812" class="nav-item nav-link">Contact</a>

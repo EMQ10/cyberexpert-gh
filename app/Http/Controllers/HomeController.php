@@ -13,19 +13,34 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $experts = Expert::orderBy('id', 'desc')
+        $experts = Expert::where('publish', 1)->orderBy('id', 'desc')
                             ->with('area')
-                            ->when($request->area_id, function ($query) use ($request) {
-                $query->where('area_id', $request->area_id);})
-
-                ->when($request->name, function ($query) use ($request) {
+                            ->when($request->name, function ($query) use ($request) {
                 $query->where('name',  'like', '%' . $request->get('name') . '%');})
                 ->get();
+                $exp = $experts;
+
+                          if($request->area_id){
+                          $experts = Expert::where('publish', 1)->orderBy('id', 'desc')
+                          ->with('area')
+                            ->whereHas('area', function ($query) use ($request) {
+                            $query->where('area_id', $request->area_id);
+                            })->get();
+
+                            $exp = Area::where('id',$request->area_id)->first();
+
+
+                        };
+
+                //             ->when($request->area_id, function ($query) use ($request) {
+                // $query->where('area_id', $request->area_id);})
+
+
 
                 // $member = Member::Where('surname', 'like', '%' . $request->get('searchQuest') . '%' )
                 //             ->orWhere('firstname', 'like', '%' . $request->get('searchQuest') . '%' )
                 //             ->orderBy('id', 'desc')->get();
-        return view('experts', compact('experts','request'));
+        return view('experts', compact('experts','request','exp'));
     }
 
     /**

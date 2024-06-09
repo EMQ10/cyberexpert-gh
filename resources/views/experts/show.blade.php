@@ -96,8 +96,16 @@
                                         </div>
                                         <div class="col-sm-8 mb-3">
                                             <div class="form-group">
-                                                <strong>Area of Expertise:</strong>
-                                                {{ $expert->area->name }}
+                                                <strong>Area(s) of Expertise:</strong>
+                                                <div class="lgs">
+                                                   @if(!empty($expert->area))
+                                                        @foreach($expert->area  as $expertise)
+                                                            <label class="lang">{{ $expertise->name}}</label>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+
+                                                {{-- {{ $expert->area->name }} --}}
                                             </div>
                                         </div>
 

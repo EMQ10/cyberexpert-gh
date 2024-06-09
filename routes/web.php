@@ -33,6 +33,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('experts', ExpertController::class);
     Route::post('/expert/picture/{id}', [ExpertController::class, 'picture'])->name('picture');
     Route::resource('areas', AreaController::class);
+    Route::get('/expert/publish/{id}', [ExpertController::class, 'publish'])->name('expert.publish');
+    Route::get('/expert/unpublish/{id}', [ExpertController::class, 'unpublish'])->name('expert.unpublish');
+
 
 });
 

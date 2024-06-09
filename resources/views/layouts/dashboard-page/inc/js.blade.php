@@ -26,21 +26,25 @@
 <!-- AdminLTE for demo purposes -->
 {{-- <script src="../../dashboard-page/dist/js/demo.js"></script> --}}
 <!-- Page specific script -->
+
+
 <script>
   $(function () {
     $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+      "responsive": false, "lengthChange": true, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+
+
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-    });
+    // $('#example2').DataTable({
+    //   "paging": true,
+    //   "lengthChange": true,
+    //   "searching": true,
+    //   "ordering": true,
+    //   "info": true,
+    //   "autoWidth": false,
+    //   "responsive": true,
+    // });
   });
 </script>
 
@@ -62,7 +66,18 @@
 <script src="../../dashboard-page/plugins/summernote/summernote-bs4.min.js"></script>
 <!-- overlayScrollbars -->
 <script src="../../dashboard-page/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-
+<!-- Select2 -->
+<script src="../../dashboard-page/plugins/select2/js/select2.full.min.js"></script>
 <!-- AdminLTE dashboard-page demo (This is only for demo purposes) -->
 {{-- <script src="../../dashboard-page/dist/js/pages/dashboard-page.js"></script> --}}
+<script>
+    $(function () {
+      //Initialize Select2 Elements
+      $('.select2').select2()
 
+      //Initialize Select2 Elements
+      $('.select2bs4').select2({
+        theme: 'bootstrap4'
+      })
+    })
+    </script>

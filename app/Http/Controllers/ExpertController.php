@@ -31,7 +31,7 @@ class ExpertController extends Controller
      */
     public function index()
     {
-        $experts = Expert::latest()->paginate(10);
+        $experts = Expert::latest()->get();
         return view('experts.index', compact('experts'));
     }
 
@@ -59,8 +59,8 @@ class ExpertController extends Controller
             'name' => 'required',
             'area_id' => 'required',
             'years_of_experience' => 'required',
-            'email' => 'required',
-            'contact' => 'required',
+            'email' => 'required|unique:experts',
+            'contact' => 'required|unique:experts',
             'profile_message' => 'required',
         ]);
 
@@ -81,19 +81,24 @@ class ExpertController extends Controller
     $expert = new Expert;
     $expert->picture = $fileName;
     $expert->name = $request->name;
-    $expert->area_id = $request->area_id;
     $expert->years_of_experience = $request->years_of_experience;
     $expert->email = $request->email;
     $expert->contact = $request->contact;
     $expert->profile_message = $request->profile_message;
+    $expert->publish = 0;
     $expert->user_id = $user;
-    $expert->save();
+
+    if($expert->save()){
+
+    $expertise = $request->area_id;
+    $expert->area()->attach($expertise);
 
     return redirect()->route('experts.index')
             ->with('success', 'expert created successfully.');
-}
+    }
 
     }
+}
 
     /**
      * Display the specified resource.
@@ -104,6 +109,8 @@ class ExpertController extends Controller
      public function show($id)
     {
         $expert = Expert::find($id);
+        // $expert->
+        $expert->load('area');
 
         return view('experts.show', compact('expert'));
     }
@@ -121,6 +128,24 @@ class ExpertController extends Controller
 
         return view('experts.edit', compact('expert','expertise'));
     }
+    public function publish($id)
+    {
+        $expert = Expert::find($id);
+        $expert->publish = 1;
+        $expert->save();
+
+        return redirect()->route('experts.index')->with('success', 'Expert published successfully');
+
+    }
+    public function unpublish($id)
+    {
+        $expert = Expert::find($id);
+        $expert->publish = 0;
+        $expert->save();
+
+        return redirect()->route('experts.index')->with('success', 'Expert unpublished successfully');
+    }
+
 
     /**
      * Update the specified resource in storage.
@@ -131,17 +156,13 @@ class ExpertController extends Controller
      */
     public function update(Request $request, $id)
     {
-        request()->validate([
-            'name' => 'required',
-            'area_id' => 'required',
-            'years_of_experience' => 'required',
-            'email' => 'required',
-            'contact' => 'required',
-            'profile_message' => 'required',
-        ]);
         $expert = Expert::find($id);
 
         $expert->update($request->all());
+
+
+        $expertise = $request->area_id;
+        $expert->area()->attach($expertise);
 
         return redirect()->route('experts.show',$expert->id)
             ->with('success', 'Expert updated successfully');

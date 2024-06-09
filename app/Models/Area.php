@@ -12,8 +12,8 @@ class Area extends Model
         'name',
     ];
 
-
-    public function expert(){
-        return $this->hasOne(expert::class);
+    public function expert()
+    {
+        return $this->belongsToMany(Expert::class,'expert_areas');
     }
 }

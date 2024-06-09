@@ -12,7 +12,6 @@ class Expert extends Model
     protected $fillable = [
         'picture',
         'name',
-        'area_id',
         'years_of_experience',
         'email',
         'contact',
@@ -20,12 +19,12 @@ class Expert extends Model
         'user_id',
     ];
 
-
-    public function area(){
-        return $this->belongsTo(Area::class);
-    }
     public function user(){
         return $this->belongsTo(User::class);
     }
+    public function area(){
+        return $this->belongsToMany(Area::class,'expert_areas');
+    }
+
 }
 

@@ -21,7 +21,7 @@
 
                 {{-- filter start --}}
 
-                    <div class="row mb-4">
+                    <div class="row mb-1">
                        <div class="col-md-5 form-group">
                         <form action="{{ route("home") }}" method="get">
                            <strong class="s">Search by Area of Expertise</Strong>
@@ -49,8 +49,13 @@
                         <div class="col-md-2 form-group">
                             <a href="/"  class="btn btn-primary mt-4">Reset</a>
                         </div>
-
+                            @if ($request->area_id)
+                            <div class="mt-3">
+                                <p>Search results for : <strong style="color: #006680">{{ $exp->name }}</strong></p>
+                            </div>
+                            @endif
                     </div>
+
 
                     @if ($experts->isEmpty())
                     <div class="section-title mb-5 wow fadeInUp" data-wow-delay="0.2s">
@@ -62,6 +67,7 @@
                 <div class="row g-4 mt-2 justify-content-center">
 
                     @foreach ($experts as $key => $expert)
+
                     <div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="service-item rounded">
                            <div class="service-img rounded-top">
@@ -74,7 +80,17 @@
                             <div class="service-content rounded-bottom bg-light p-4">
                                 <div class="service-content-inner">
                                     <h5 class="mb-4">{{ $expert->name }}</h5>
-                                    <p class="mb-4" style="color: #006680">{{ $expert->area->name }}</p>
+                                    <p>
+                                        <div style="text-align: center; color:#006680; font-weight:bold"> Area(s) of Expertise</div>
+                                        <hr class="mt-1">
+                                        @if(!empty($expert->area))
+                                            @foreach($expert->area  as $expertise)
+                                                <li style="color: #006680">{{ $expertise->name}}</li>
+                                            @endforeach
+                                        @endif
+                                        <hr>
+                                    </p>
+                                    {{-- <p class="mb-4" style="color: #006680">{{ $expert->area->name }}</p> --}}
                                     <p class="mb-4" style="color: #006680"><i class="fa fa-star"> {{ $expert->years_of_experience }} Years Of Experience</i></p>
                                     <a href="{{ route('expert.profile',$expert->id) }}" class="btn btn-primary rounded-pill text-white py-2 px-4 mb-2">Read More</a>
                                 </div>

@@ -26,8 +26,8 @@
 
           <!-- /.card -->
           @if ($message = Session::get('success'))
-            <div class="alert alert-success my-2">
-            <p>{{ $message }}</p>
+            <div class="alert alert-success">
+            <p style="color: white; font-size:20px">{{ $message }}</p>
             </div>
             @endif
 
@@ -40,12 +40,14 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-              <table id="example1" class="table table-bordered table-striped">
+              <table id="example1" class="table table-bordered table-striped table-responsive text-nowrap">
                 <thead>
                 <tr>
+                  <th>S/n</th>
                   <th>Name</th>
                   <th>Email</th>
-                  <th>Area of Expertise</th>
+                  <th>Area(s) of Expertise</th>
+                  <th>Status</th>
                   <th>Created At</th>
                   <th>Action</th>
                 </tr>
@@ -54,9 +56,26 @@
 
                     @foreach ($experts as $key => $expert)
                         <tr>
+                            <td>{{ $loop->iteration}}</td>
                             <td>{{ $expert->name }}</td>
                             <td>{{ $expert->email }}</td>
-                            <td>{{ $expert->area->name }}</td>
+                            <td>
+                                @if(!empty($expert->area))
+                                    @foreach($expert->area  as $expertise)
+                                        <li>{{ $expertise->name}}</li>
+                                    @endforeach
+                                @endif
+                            </td>
+                            @if ($expert->publish == 1)
+                            <td>
+                                <label style="color: #006680">Published</label>
+                                {{-- <a href="{{ route('expert.unpublish',$expert->id) }}" class="btn btn-danger">Unpublish</a> --}}
+                            </td>
+                            @else
+                            <td >
+                                <a href="{{ route('expert.publish',$expert->id) }}" class="btn btn-success">Publish</a>
+                            </td>
+                            @endif
                             <td>{{ $expert->created_at }}</td>
 
                             <td>
@@ -70,9 +89,11 @@
                 </tbody>
                 <tfoot>
                 <tr>
+                  <th>S/n</th>
                   <th>Name</th>
                   <th>Email</th>
                   <th>Area of Expertise</th>
+                  <th>Status</th>
                   <th>Created At</th>
                   <th>Action</th>
                 </tr>
