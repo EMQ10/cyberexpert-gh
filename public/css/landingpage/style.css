@@ -39,14 +39,13 @@
     flex-wrap: wrap;
   }
 
-.lang{
+  .lang{
     text-transform: capitalize !important;
     color: #006680;
-    height: 50px !important;
+    border: 1px solid  #006680;
     border-radius: 3px;
     margin-right: 5px;
     padding: 5px;
-    overflow: hidden;
   }
 
 .float-right{
