@@ -21,13 +21,13 @@
                             <h3 class="display-7 mb-4">{{ $expert->name }}</h3>
                             <p style="color: black"> <strong class="s">Expertise:</strong> </p>
                             {{-- <strong>Area(s) of Expertise:</strong> --}}
-                                                <div class="lgs">
+                                                <p class="lgs">
                                                    @if(!empty($expert->area))
                                                         @foreach($expert->area  as $expertise)
                                                             <label class="lang mb-2">{{ $expertise->name}}</label>
                                                         @endforeach
                                                     @endif
-                                                </div>
+                                                </p>
                             <strong style="color: #006680">Profile</strong>
                             <p style="color: black" class="mb-4">{{ $expert->profile_message }}</p>
                         </div>
