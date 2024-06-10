@@ -94,7 +94,7 @@
                                     <div class="select2-blue">
                                     <select class="select2" multiple="multiple" name="area_id[]" data-placeholder="Select Area (s) of expertise" value="{{ old('area_id[]') }}" data-dropdown-css-class="select2-blue" style="width: 100%;">
                                         @foreach ($expertise as $area)
-                                        <option value="{{ $area->id }}"@if(old('area_id',$expert->area_id) ==  $area->id )  selected @endif>{{  $area->name }}</option>
+                                        <option value="{{ $area->id }}">{{ $area->name }}</option>
                                         @endforeach
                                     </select>
                                     </div>
