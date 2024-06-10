@@ -21,10 +21,16 @@
                             <h3 class="display-7 mb-4">{{ $expert->name }}</h3>
                             <p style="color: black"> <strong class="s">Expertise:</strong> </p>
                             {{-- <strong>Area(s) of Expertise:</strong> --}}
-                                                <p class="lgs">
+                                                <p style="display: flex;
+                                                flex-wrap: wrap;">
                                                    @if(!empty($expert->area))
                                                         @foreach($expert->area  as $expertise)
-                                                            <label class="lang mb-2">{{ $expertise->name}}</label>
+                                                            <label style="text-transform: capitalize !important;
+                                                            color: #006680;
+                                                            border: 1px solid  #006680;
+                                                            border-radius: 3px;
+                                                            margin-right: 5px;
+                                                            padding: 5px;" class="mb-2">{{ $expertise->name}}</label>
                                                         @endforeach
                                                     @endif
                                                 </p>
