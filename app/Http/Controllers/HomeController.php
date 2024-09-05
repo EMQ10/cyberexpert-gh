@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Vinkla\Hashids\Facades\Hashids;
 
 use Illuminate\Http\Request;
 use App\Models\Expert;
@@ -13,8 +14,9 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+
         $experts = Expert::where('publish', 1)->orderBy('id', 'desc')
-                            ->with('area')
+                            // ->with('area')
                             ->when($request->name, function ($query) use ($request) {
                 $query->where('name',  'like', '%' . $request->get('name') . '%');})
                 ->get();
@@ -22,7 +24,7 @@ class HomeController extends Controller
 
                           if($request->area_id){
                           $experts = Expert::where('publish', 1)->orderBy('id', 'desc')
-                          ->with('area')
+                        //   ->with('area')
                             ->whereHas('area', function ($query) use ($request) {
                             $query->where('area_id', $request->area_id);
                             })->get();
@@ -32,14 +34,6 @@ class HomeController extends Controller
 
                         };
 
-                //             ->when($request->area_id, function ($query) use ($request) {
-                // $query->where('area_id', $request->area_id);})
-
-
-
-                // $member = Member::Where('surname', 'like', '%' . $request->get('searchQuest') . '%' )
-                //             ->orWhere('firstname', 'like', '%' . $request->get('searchQuest') . '%' )
-                //             ->orderBy('id', 'desc')->get();
         return view('experts', compact('experts','request','exp'));
     }
 
@@ -64,8 +58,11 @@ class HomeController extends Controller
      */
     public function show($id)
     {
-        $expert = Expert::find($id);
+        // $decoded_id = Hashids::decode($id); //decode the hashed id
+        // $expert = Expert::find($decoded_id[0]);
 
+        $expert = Expert::find($id);
+        // dd($expert);
         return view('experts-profile',compact('expert'));
     }
 

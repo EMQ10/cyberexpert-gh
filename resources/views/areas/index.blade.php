@@ -43,6 +43,7 @@
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
+                  <th>S/n</th>
                   <th>Name</th>
                   <th>Created At</th>
                   <th>Action</th>
@@ -52,6 +53,7 @@
 
                     @foreach ($areas as $key => $area)
                         <tr>
+                            <td>{{ $loop->iteration}}</td>
                             <td>{{ $area->name }}</td>
                             <td>{{ $area->created_at }}</td>
 
@@ -64,6 +66,7 @@
                 </tbody>
                 <tfoot>
                 <tr>
+                  <th>S/n</th>
                   <th>Name</th>
                   <th>Created At</th>
                   <th>Action</th>

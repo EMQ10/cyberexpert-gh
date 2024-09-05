@@ -16,7 +16,6 @@
                     <div class="sub-style">
                         <h4 class="sub-title px-3 mb-0">EXPERTS</h4>
                     </div>
-                    {{-- <h3 class="display-7 mb-2 mt-4">Our Team of experts are always ready to assist you.</h3> --}}
                 </div>
 
                 {{-- filter start --}}
@@ -63,7 +62,7 @@
                         <h4 class="mb-2 mt-5" style="color: red">No result matches your search</h4>
                     </div>
                 @else
-                  {{--filter End  --}}
+
                 <div class="row g-4 mt-2 justify-content-center">
 
                     @foreach ($experts as $key => $expert)
@@ -77,22 +76,20 @@
                                 <img src="/img/teacher.jpg" class="img-fluid rounded-top w-100" alt="">
                                 @endif
                             </div>
-                            <div class="service-content rounded-bottom bg-light p-4">
+                            <h5 class="p-3 m-0 text-center text-light name">{{ $expert->name }}</h5>
+
+                            <div class="service-content border border-primary rounded-bottom bg-light p-4">
+
                                 <div class="service-content-inner">
-                                    <h5 class="mb-4">{{ $expert->name }}</h5>
+                                    <p class="mb-4" style="color: #006680"><i class="fa fa-star"> {{ $expert->years_of_experience }} Years Of Experience</i></p>
                                     <p>
-                                        <div style="text-align: center; color:#006680; font-weight:bold"> Area(s) of Expertise</div>
-                                        <hr class="mt-1">
-                                        @if(!empty($expert->area))
-                                            @foreach($expert->area  as $expertise)
-                                                <li style="color: #006680">{{ $expertise->name}}</li>
-                                            @endforeach
-                                        @endif
+                                        <div style="text-align: center; color:#006680; font-weight:bold"> Area(s) of Expertise
+                                        <button class="btn btn-outline-primary expertise rounded-pill" value="{{ $expert->id }}" ><i class="fa fa-arrow-down"></i></button></div>
                                         <hr>
                                     </p>
-                                    {{-- <p class="mb-4" style="color: #006680">{{ $expert->area->name }}</p> --}}
-                                    <p class="mb-4" style="color: #006680"><i class="fa fa-star"> {{ $expert->years_of_experience }} Years Of Experience</i></p>
-                                    <a href="{{ route('expert.profile',$expert->id) }}" class="btn btn-primary rounded-pill text-white py-2 px-4 mb-2">Read More</a>
+                                    <a href="{{ route('expert.message',$expert->id) }}" style="font-size:26px" class="btn btn-primary  square-pill text-white py-0 px-2 mb-0"><i class="fa fa-envelope"></i></a>
+                                    <a href="{{ route('expert.profile',$expert->id) }}" class="btn btn-primary square-pill text-white  right float-right py-2 px-4 mb-2">Read More</a>
+
                                 </div>
                             </div>
                         </div>
@@ -102,6 +99,27 @@
                 @endif
 
             </div>
+
+{{-- Expertise modal --}}
+
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title row" id="staticBackdropLabel">
+                        <input id="mini" style="width: max-content" type="text" value=""></h5>
+                    </div>
+                    <div class="modal-body">
+                        <p style="display: flex; flex-wrap: wrap;"id="list"></p>
+                        <span type="button" class="btn btn-danger right" data-bs-dismiss="modal">Close</span>
+
+                    </div>
+                    {{-- <div class="modal-footer">
+                    </div> --}}
+                  </div>
+                </div>
+              </div>
+
         </div>
         <!-- Experts End -->
 

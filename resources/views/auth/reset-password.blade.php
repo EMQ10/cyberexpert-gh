@@ -29,7 +29,12 @@
 
                                 <div class="row gy-3 gx-4">
                                     <div class="col-xl-12">
-                                        <input id="email" type="email" style="color: #006680" name="email" :value="old('email', $request->email)" class="form-control py-3 border-primary bg-transparent mb-3" required autofocus autocomplete="username" >
+                                        {{-- <x-input-label for="email" :value="__('email')" />
+                                        <input id="email" type="email" style="color: #006680" name="email" :value="old('email', $request->email)" class="form-control py-3 border-primary bg-transparent mb-3" required autofocus autocomplete="username" > --}}
+
+                                        {{-- <x-input-label for="email" :value="__('Email')" /> --}}
+                                        <x-text-input id="email" readonly name="email" type="email" class="mt-1 block w-full shadow-none border-0 bg-transparent" :value="old('email', $request->email)" required autocomplete="username" />
+                                        <x-input-error class="mt-2" :messages="$errors->get('email')" />
                                     </div>
                                     <div class="col-xl-12">
                                         <x-input-label for="password" :value="__('Password')" />

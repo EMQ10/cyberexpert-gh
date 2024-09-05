@@ -1,14 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
+// use Vinkla\Hashids\Facades\Hashids;
 
 use App\Models\Expert;
 use App\Models\Area;
+use App\Models\Expert_area;
 use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Laravel\Facades\Image;
+use DB;
+use Symfony\Component\Uid\Uuid;
+
+
 
 class ExpertController extends Controller
 {
@@ -77,8 +83,10 @@ class ExpertController extends Controller
 
     $path = storage_path('app/public/images/');
     $image->save($path.$fileName);
+    // $uuid = Uuid::v4();
 
     $expert = new Expert;
+    // $expert->mid = $uuid;
     $expert->picture = $fileName;
     $expert->name = $request->name;
     $expert->years_of_experience = $request->years_of_experience;
@@ -90,6 +98,8 @@ class ExpertController extends Controller
 
     if($expert->save()){
 
+        // $area = new Expert_area;
+        // $area->`area_id`, `expert_id
     $expertise = $request->area_id;
     $expert->area()->attach($expertise);
 
@@ -123,8 +133,25 @@ class ExpertController extends Controller
      */
     public function edit($id)
     {
+        $ID = $id;
         $expert = Expert::find($id);
-        $expertise = Area::all();
+
+        // get area of expertise that is not assign to an expert
+        $expertarea = DB::table('expert_areas')->select('area_id')->where('expert_id', $ID)->get();
+        $ur = [];
+        foreach ($expertarea as $exp) {
+            $ur[] = $exp->area_id;
+        }
+
+        $allexpertise = DB::table('areas')->selectRaw('id as area_id')->get();
+        $ar = [];
+        foreach ($allexpertise as $areaofexp) {
+            $ar[] = $areaofexp->area_id;
+        }
+
+        $diff = array_diff($ar, $ur);
+        $expertise = Area::whereIn('id', $diff)->get();
+
 
         return view('experts.edit', compact('expert','expertise'));
     }
@@ -146,6 +173,20 @@ class ExpertController extends Controller
         return redirect()->route('experts.index')->with('success', 'Expert unpublished successfully');
     }
 
+    public function expertise($id)
+    {
+        $data = Expert::find($id);
+        $area[] = $data->area;
+
+        $data->load('area');
+
+        return \response()->json([
+            'status' => 200,
+            'data' => $data,
+            'expertise' => $area,
+
+        ]);
+    }
 
     /**
      * Update the specified resource in storage.
@@ -154,7 +195,7 @@ class ExpertController extends Controller
      * @param  \App\Expert  $expert
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,$id)
     {
         $expert = Expert::find($id);
 
@@ -167,6 +208,18 @@ class ExpertController extends Controller
         return redirect()->route('experts.show',$expert->id)
             ->with('success', 'Expert updated successfully');
     }
+
+     public function unassign_expertise(Request $request)
+     {
+        $id = $request->expert_id;
+        $area = $request->expertise;
+
+        $expert = Expert::find($id);
+        $expert->area()->detach($area);
+
+        return redirect()->route('experts.edit',$expert->id);
+
+     }
 
     public function picture(Request $request, $id)
     {
@@ -191,7 +244,15 @@ class ExpertController extends Controller
             ->with('success', 'Expert updated successfully');
     }
 }
-    /**
+
+        public function message($id){
+        // $decoded_id = Hashids::decode($id); //decode the hashed id
+        // $expert = Expert::find($decoded_id[0]);
+        $expert = Expert::find($id);
+        return view('message_expert', compact('expert'));
+
+        }
+            /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Expert  $expert

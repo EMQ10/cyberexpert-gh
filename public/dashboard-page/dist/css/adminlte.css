@@ -82,7 +82,9 @@ body {
     padding: 5px;
   }
 
-
+.color{
+    color: #006080;
+}
 .brand-link{
     background-color: white !important;
     color: #006680 !important;

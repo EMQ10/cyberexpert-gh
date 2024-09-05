@@ -89,17 +89,17 @@
                             </div>
 
                             <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Area of expertise (Multiple)</label>
-                                    <div class="select2-blue">
-                                    <select class="select2" multiple="multiple" name="area_id[]" data-placeholder="Select Area (s) of expertise" value="{{ old('area_id[]') }}" data-dropdown-css-class="select2-blue" style="width: 100%;">
-                                        @foreach ($expertise as $area)
-                                        <option value="{{ $area->id }}">{{ $area->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    </div>
-                                </div>
-                            </div>
+                              <div class="form-group">
+                                  <label>Area of expertise (Multiple)</label>
+                                  <div class="select2-blue">
+                                  <select class="select2" multiple="multiple" name="area_id[]" data-placeholder="Select Area (s) of expertise" value="{{ old('area_id[]') }}" data-dropdown-css-class="select2-blue" style="width: 100%;">
+                                      @foreach ($expertise as $area)
+                                      <option value="{{ $area->id }}">{{ $area->name }}</option>
+                                      @endforeach
+                                  </select>
+                                  </div>
+                              </div>
+                          </div>
 
                             <div class="col-sm-6">
                                 <div class="form-group">
@@ -109,20 +109,6 @@
                               </div>
 
 
-                            <div class="col-sm-6 mb-3">
-                                <div class="form-group">
-                                    <strong>Current Area(s) of Expertise:</strong>
-                                    <div class="lgs">
-                                       @if(!empty($expert->area))
-                                            @foreach($expert->area  as $expertise)
-                                                <label class="lang">{{ $expertise->name}}</label>
-                                            @endforeach
-                                        @endif
-                                    </div>
-
-                                    {{-- {{ $expert->area->name }} --}}
-                                </div>
-                            </div>
 
                             <div class="col-12 text-center">
                                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -131,6 +117,37 @@
                     </form>
                   <!-- /.card -->
                 <!--/.col (left) -->
+                <div class="row">
+
+                  <div class="col-sm-12 mb-3">
+                    <div class="form-group">
+                        <strong>Current Area(s) of Expertise:</strong>
+                        <div class="lgs">
+                           @if(!empty($expert->area))
+                                @foreach($expert->area  as $expertise)
+                                <form action="{{ route('expertise.remove') }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    @method('POST')
+                                    <div class="col-sm-12 p-0">
+                                        <input type="text" name="expert_id" class="form-control" value="{{ $expert->id }}" hidden>
+                                    </div>
+                                    <label class="lang">{{ $expertise->name}}
+                                        <input type="text" name="expertise" class="lang" value="{{ $expertise->id }}" hidden>
+
+                                        <button type="submit" class="btn p-0"><span style="color: red" class="close">&times;</span></button>
+                                    </label>
+                                </form>
+                                @endforeach
+                            @endif
+                        </div>
+
+                        {{-- {{ $expert->area->name }} --}}
+                    </div>
+                </div>
+
+                {{-- </form> --}}
+            </div>
+
             </div>
 
               </div>

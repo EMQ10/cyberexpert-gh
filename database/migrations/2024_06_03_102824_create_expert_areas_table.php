@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('experts', function (Blueprint $table) {
-            $table->integer('publish')->after('profile_message')->nullable();
+        Schema::create('expert_areas', function (Blueprint $table) {
+            $table->foreignUuid('expert_id')->constrained();
+            $table->foreignUuid('area_id')->constrained();
+            $table->timestamps();
         });
     }
 
@@ -21,10 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
-        Schema::table('experts', function (Blueprint $table) {
-        $table->dropForeign(['experts_area_id_foreign']);
-        $table->dropColumn('area_id');
-});
+        Schema::dropIfExists('expert_areas');
     }
 };

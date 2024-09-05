@@ -12,12 +12,18 @@
                         <div class="about-img pb-5 ps-5">
                             <img src="{{ asset('/storage/images/'.$expert->picture) }}" class="img-fluid rounded w-100" style="object-fit: cover;" alt="Expert Image">
                             <div class="about-experience">{{ $expert->years_of_experience }} years experience</div>
+
+                            <a href="{{ route('expert.message',$expert->id) }}" style="font-size:26px" class="btn btn-primary square-pill text-white py-0 px-2 mb-0 w-100 mes">Send Message</a>
+
                         </div>
                     </div>
 
                     <div class="col-lg-7 wow fadeInRight" data-wow-delay="0.4s">
                         <div class="section-title text-start mb-5">
                             <h4 class="sub-title pe-3 mb-4">Expert Profile</h4>
+
+                            <a href="/" style="color: white" class="btn btn-primary right"><i class="fa fa-arrow-left"></i></a>
+
                             <h3 class="display-7 mb-4">{{ $expert->name }}</h3>
                             <p style="color: black"> <strong class="s">Expertise:</strong> </p>
                             {{-- <strong>Area(s) of Expertise:</strong> --}}
