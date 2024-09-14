@@ -18,6 +18,11 @@
           </ol>
         </div>
       </div>
+      @if ($info = Session::get('success'))
+      <div class="alert alert-success m-0">
+      <p class="p-0 m-0" style="color: white; font-size:20px; font-weight:bold;">{{ $info }}</p>
+      </div>
+      @endif
     </div><!-- /.container-fluid -->
   </section>
 
@@ -77,7 +82,9 @@
 
               </div>
               @if ($message->status == 0)
-              <button class="btn btn-info">Change Expert</button>
+              {{-- <button class="btn btn-outline-primary expertise rounded-pill"  data-target="#staticBackdrop" data-toggle="modal" value="" ><i class="fa fa-arrow-down"></i></button> --}}
+
+              <button data-target="#staticBackdrop" data-toggle="modal" value="" class="btn btn-info">Change Expert</button>
               <a class="btn btn-success" href="{{ route('expert.mail',$message->id) }}" class="btn btn-success">Mail to Expert</a>
               @else
               <h6> Status : <b style="color: green">Mailed</b></h6>
@@ -137,6 +144,50 @@
         </div>
         <!-- /.modal-dialog -->
 </div>
+
+{{-- change Expert Modal --}}
+<div class="modal fade" id="staticBackdrop">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-body">
+
+            <div class="card-header">
+              <h5 style="color: #006080;text-transform:uppercase">Change Assigned Expert</h5>
+            </div>
+            <form action="{{ route("expert.change",$message->id) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('POST')
+                <div class="card-body pt-2" style="color: #006080">
+
+                        <div class="row">
+                            <div class="col-12">
+                                <label>Select new Expert</label>
+                                <select class="select2bs4 form-control" id="expert" name="change" >
+                                    @foreach ($newexpert as $new )
+                                    <option value="{{ $new->id}}">{{ $new->name }}</option>
+                                    @endforeach
+                                </select>
+
+                            </div>
+
+                        </div>
+                </div>
+
+        {{-- </div> --}}
+        <button type="button" class="btn btn-danger float-right m-2" data-dismiss="modal">Close</button>
+
+        <button type="bsubmit" class="btn btn-warning float-right m-2" >update</button>
+    </form>
+
+        </div>
+
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
       <!-- /.modal -->
+
 
       @endsection

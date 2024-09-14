@@ -50,6 +50,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/messages', [ExpertMessageController::class, 'index'])->name('message.index');
     Route::get('/messages/details/{id}', [ExpertMessageController::class, 'show'])->name('message.show');
     Route::get('/messages/mail/{id}', [ExpertMessageController::class, 'mail'])->name('expert.mail');
+    Route::post('/messages/expert/change/{id}', [ExpertMessageController::class, 'expert_change'])->name('expert.change');
 
     Route::post('/mark-as-read', [ExpertMessageController::class, 'markNotification'])->name('markNotification');
 

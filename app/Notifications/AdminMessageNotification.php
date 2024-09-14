@@ -36,7 +36,7 @@ class AdminMessageNotification extends Notification
     {
         return (new MailMessage)
                     ->line('Dear Admin')
-                    ->line(new HtmlString('New Message was posted on CSEAG to request <b>'.$this->message->subject.'</b>'))
+                    ->line(new HtmlString('New Message was posted on CSEAG with subject: <b>'.$this->message->subject.'</b>'))
                     ->line('Please login to the platform and Forward the message to the assigned expert.')
                     ->line('Message at : https://teams.cyberexpertgh.org/messages/details/'.$this->message->id)
                     ->line('Kindly proccess in a timely manner');

@@ -10,11 +10,8 @@
                     <div class="col-lg-5 wow fadeInLeft" data-wow-delay="0.2s">
 
                         <div class="about-img pb-5 ps-5">
-                            <img src="{{ asset('/storage/images/'.$expert->picture) }}" class="img-fluid rounded w-100" style="object-fit: cover;" alt="Expert Image">
-                            <div class="about-experience">{{ $expert->years_of_experience }} years experience</div>
-
+                            <img src="{{ asset('/storage/images/'.$expert->picture) }}" class="img-fluid " style="object-fit: cover;" alt="Expert Image">
                             <a href="{{ route('expert.message',$expert->id) }}" style="font-size:26px" class="btn btn-primary square-pill text-white py-0 px-2 mb-0 w-100 mes">Send Message</a>
-
                         </div>
                     </div>
 
@@ -25,7 +22,9 @@
                             <a href="/" style="color: white" class="btn btn-primary right"><i class="fa fa-arrow-left"></i></a>
 
                             <h3 class="display-7 mb-4">{{ $expert->name }}</h3>
-                            <p style="color: black"> <strong class="s">Expertise:</strong> </p>
+                            <h5 class="mb-4 display-7 "><i class="fa fa-star" style="color: gold"></i><b> {{ $expert->years_of_experience }} years experience <b> in the field of cyber security</h5>
+
+                            <p style="color: black"> <strong class="s">Areas of Expertise:</strong> </p>
                             {{-- <strong>Area(s) of Expertise:</strong> --}}
                                                 <p style="display: flex;
                                                 flex-wrap: wrap;">

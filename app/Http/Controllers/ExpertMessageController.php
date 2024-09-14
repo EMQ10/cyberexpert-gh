@@ -87,9 +87,10 @@ class ExpertMessageController extends Controller
         // $try= $message->expert_id;
         // dd($try);
         $expert = Expert::where('id',$message->expert_id)->first();
+        $newexpert = Expert::all();
         // dd($expert);
 
-        return view('messages.show', compact('message','expert'));
+        return view('messages.show', compact('message','expert','newexpert'));
     }
 
 
@@ -109,9 +110,30 @@ class ExpertMessageController extends Controller
     {
         $message = Expert_message::find($id);
         $expert = Expert::where('id', $message->expert_id)->first();
-        // dd('hello'.$id);
+
+        $message->status = 1;
+        $message->save();
+
         $expert->notify(new ExpertMessageNotification($message));
 
+        return back()->with('success', 'Expert created successfully.');
+    }
+    public function expert_change(Request $request,$id)
+    {
+        $expert = $request->change;
+        $expert = Expert::find($expert);
+
+        $message = Expert_message::find($id);
+
+        $message->expert_name = $expert->name;
+        $message->expert_email = $expert->email;
+        $message->expert_id = $expert->id;
+
+        $message->save();
+        // dd($message);
+
+
+        return back()->with('success', 'expert successfully changed.');
     }
     /**
      * Show the form for editing the specified resource.
