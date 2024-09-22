@@ -65,7 +65,9 @@ class ExpertMessageController extends Controller
 
         $user = User::whereHas('roles', function($q){$q->where('name', 'Admin');})->get();
         // dd($user);
-        Notification::send($user, new AdminMessageNotification($message));
+        foreach ($user as $admin) {
+            Notification::send($user, new AdminMessageNotification($message));
+        }
 
         // $user->Notification::send(new AdminMessageNotification($message));
 
@@ -116,7 +118,7 @@ class ExpertMessageController extends Controller
 
         $expert->notify(new ExpertMessageNotification($message));
 
-        return back()->with('success', 'Expert created successfully.');
+        return back()->with('success', 'Message Mailed successfully.');
     }
     public function expert_change(Request $request,$id)
     {
