@@ -66,7 +66,13 @@ class ExpertMessageController extends Controller
         $user = User::whereHas('roles', function($q){$q->where('name', 'Admin');})->get();
         // dd($user);
         foreach ($user as $admin) {
-            Notification::send($user, new AdminMessageNotification($message));
+                try {
+                Notification::send($user, new AdminMessageNotification($message));
+                }
+                catch(\Exception $e) {
+                    report($e); // ignored
+                    // echo "erro";
+                }
         }
 
         // $user->Notification::send(new AdminMessageNotification($message));
