@@ -40,15 +40,8 @@ class ExpertMessageController extends Controller
      */
     public function store(Request $request)
     {
-
-        // $uuid = Uuid::v4();
-
-        // echo($uuid);
-
         $message = new Expert_message;
-        // $message->id = $uuid;
 
-        // dd($message->mid);
         $message->expert_name = $request->expert_name;
         $message->expert_email = $request->expert_email;
 
@@ -64,18 +57,15 @@ class ExpertMessageController extends Controller
 
 
         $user = User::whereHas('roles', function($q){$q->where('name', 'Admin');})->get();
-        // dd($user);
+
         foreach ($user as $admin) {
                 try {
                 Notification::send($user, new AdminMessageNotification($message));
                 }
                 catch(\Exception $e) {
-                    report($e); // ignored
-                    // echo "erro";
+                    report($e); // send error to log
                 }
         }
-
-        // $user->Notification::send(new AdminMessageNotification($message));
 
         return redirect()->route('expertise.message.feedback');
 
@@ -92,11 +82,9 @@ class ExpertMessageController extends Controller
     public function show(Request $request, $id)
     {
         $message = Expert_message::find($id);
-        // $try= $message->expert_id;
-        // dd($try);
+
         $expert = Expert::where('id',$message->expert_id)->first();
         $newexpert = Expert::all();
-        // dd($expert);
 
         return view('messages.show', compact('message','expert','newexpert'));
     }
@@ -122,7 +110,12 @@ class ExpertMessageController extends Controller
         $message->status = 1;
         $message->save();
 
-        $expert->notify(new ExpertMessageNotification($message));
+        try {
+            $expert->notify(new ExpertMessageNotification($message));
+                }
+                catch(\Exception $e) {
+                    report($e); // send error to log
+                }
 
         return back()->with('success', 'Message Mailed successfully.');
     }
@@ -138,7 +131,6 @@ class ExpertMessageController extends Controller
         $message->expert_id = $expert->id;
 
         $message->save();
-        // dd($message);
 
 
         return back()->with('success', 'expert successfully changed.');
